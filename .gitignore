@@ -1,2 +1,8 @@
 scratch.R
 Data/
+.Rproj.user
+Data
+.DS_Store
+.RData
+.Rhistory
+scratch.R
