@@ -1,0 +1,72 @@
+
+
+fluidPage(skin='blue',
+  dashboardHeader(title='World Happiness'),
+  dashboardSidebar(
+    sidebarMenu(
+      menuItem('Scatter Plot',tabName = 'map',icon=icon('map')),
+      menuItem('Data',tabName = 'data',icon=icon('database')))),
+  dashboardBody(
+    tabItems(
+          #INTERACTIVE MAP TAB
+          tabItem(tabName='map',
+                  #leaflet map
+                  #slider
+                  
+                  fluidRow(
+                  column(10,
+                  HTML('<br></br>'),
+                  selectizeInput(inputId ="variables",
+                                 label = "Happiness Rating versus",
+                                 choices = c("Healthy life expectancy" = "Healthy.life.expectancy",
+                                             "Generosity" = "Generosity",
+                                             "Freedom to make life choices"="Freedom.to.make.life.choices",
+                                             "Social support" = "Social.support",
+                                             "Logged GDP per capita" = "Logged.GDP.per.capita",
+                                             "Perceptions of corruption" = "Perceptions.of.corruption")),
+                  
+                  checkboxGroupInput("variables2", "Regions",
+                                     c("Central and Eastern Europe" = "Central and Eastern Europe",
+                                       "Commonwealth of Independent States" = "Commonwealth of Independent States",
+                                       "East Asia" = "East Asia",
+                                       "Latin America and Caribbean" = "Latin America and Caribbean",
+                                       "Middle East and North Africa" = "Middle East and North Africa",
+                                       "North America and ANZ" = "North America and ANZ",
+                                       "South Asia" = "South Asia",
+                                       "Southeast Asia" = "Southeast Asia",
+                                       "Sub-Saharan Africa" = "Sub-Saharan Africa",
+                                       "Western Europe" = "Western Europe")),
+                  plotOutput("plot1"),
+                  
+                  tableOutput("temp"),
+                  
+
+                  #<br> adds space below the drop down menus
+                  HTML('
+                         <br></br>
+                         <br></br> 
+                         <br></br>
+                       ')),
+                  column(2,HTML(
+                         ''))
+                  
+                  )),
+          
+            #DATA TAB
+          tabItem(tabName='data',
+                  HTML('
+                     <a href="https://www.kaggle.com/datasets/unsdsn/world-happiness">Data Source</a>
+                     <br></br> 
+                       '),
+                  
+                  fluidRow(box(DT::dataTableOutput("table"), width = 20)),
+                  HTML('
+                     <br></br> 
+                     <br></br> 
+                       '))
+    )
+  )
+)
+
+
+

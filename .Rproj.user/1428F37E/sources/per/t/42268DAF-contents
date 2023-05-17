@@ -1,0 +1,53 @@
+function(input,output,session){
+  
+#DATA TAB 
+  output$table=DT::renderDataTable({
+    datatable(world_happiness,rownames = F) %>% 
+      formatStyle(input$selected,background = 'skyblue',
+                  fontWeight ='bold')
+  })
+
+  data1 <- reactive({
+    world_happiness %>% 
+      select(Ladder.score, Healthy.life.expectancy, Regional.indicator)
+  })
+  
+  
+  #temp = input$variables
+  #temp2 = str_replace_all(temp, " ", ".")
+  #y_variable = grep(str_replace_all(temp2, " ", "."), colnames(world_happiness))
+  #y_variable = world_happiness$Healthy.life.expectancy
+  
+  #y_data <- reactive({
+    #world_happiness[grep(str_replace_all(input$variables, " ", "."), colnames(world_happiness))]
+  #})
+  
+
+  
+
+  
+  
+
+
+  output$temp <- renderTable({
+    (world_happiness%>% filter(Regional.indicator %in% input$variables2))[, c("Ladder.score",input$variables, "Regional.indicator"), drop = FALSE]
+  }, rownames = TRUE)
+  
+  
+  world_happiness2 <- reactive({
+    world_happiness %>% 
+      filter(Regional.indicator %in% input$variables2)
+  })
+  
+  output$plot1 <- renderPlot({
+    ggplot(world_happiness2, aes_string(x="Ladder.score", y=input$variables, color = "Regional.indicator")) +
+      geom_point(size=2, shape=1,aes(fill=Regional.indicator)) + 
+      theme_bw()
+  })
+    
+  
+
+}
+
+
+
